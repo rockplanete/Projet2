@@ -52,7 +52,7 @@ return(mat)
 ################################################################################
 
 #transformation des 101 en 111 #################################################
-turn101to111 <- function(mat){                                                 #
+turn101to111 <- function(mat,hauteur,largeur){                                 #
 h<-1
 l<-1
 while(h<=hauteur){
@@ -71,7 +71,7 @@ return(mat)
 ################################################################################
 
 #Suppresion des "BLOC" #########################################################
-supprBloc <- function(mat){                                                    #
+supprBloc <- function(mat,hauteur,largeur){                                    #
 #Premiere ligne
 l<-1
 h<-1
@@ -110,7 +110,7 @@ return(mat)
 ################################################################################
 
 #Supprime les détails sur les bords droit et gauche ############################
-detail <- function(mat){                                                       #
+detail <- function(mat,hauteur){                                               #
 l<-1
 boucle<-0
 while(boucle<2){  
@@ -199,7 +199,7 @@ nb0 <- function(nb){                                                           #
 ################################################################################
 
 # Simule 1 ou plusieurs fois ###################################################
-OneSimu <- function(largeur,hauteur,evolve){                                   #
+OneSimu <- function(hauteur,largeur,evolve){                                   #
    FinalTab<-head(data.frame(Gen0=NA,Gen1=NA,End0=NA,End1=NA,GenRatio=NA,EndRatio=NA,nbTriangle=NA),0)
    if(evolve){
     nbIteration<-100
@@ -216,10 +216,10 @@ OneSimu <- function(largeur,hauteur,evolve){                                   #
     co<-matrix(0,hauteur,largeur)
     co[1,]<-alea
     co<- generate(hauteur,largeur,co)
-    co<-turn101to111(co)
-    co<-supprBloc(co)
-    co<-turn101to111(co)
-    co<-detail(co)
+    co<-turn101to111(co,hauteur,largeur)
+    co<-supprBloc(co,hauteur,largeur)
+    co<-turn101to111(co,hauteur,largeur)
+    co<-detail(co,hauteur)
     FinalTab<-rbind(FinalTab,counter(alea,co,hauteur,largeur))
     i<-i+1
   }
@@ -255,6 +255,5 @@ evolve<-FALSE #FALSE : Une seule simulation à 1/2 de 0 et 1/2 de 1 /// TRUE : P
 
 # Execution ####################################################################
 
-OneSimu(largeur,hauteur,evolve)
-
+OneSimu(hauteur,largeur,evolve)
 
